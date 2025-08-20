@@ -19,9 +19,9 @@ df = pd.DataFrame(data)
 
 # ✅ Calculate frequency count for HR
 hr_count = (df["Department"] == "HR").sum()
-print("Frequency count for HR department:", hr_count)
+print("Frequency count for HR department:", hr_count)  # Console output
 
-# ✅ Plot histogram of departments
+# ✅ Create histogram
 plt.figure(figsize=(6,4))
 df["Department"].value_counts().plot(kind="bar")
 plt.title("Department Distribution")
@@ -30,7 +30,7 @@ plt.ylabel("Count")
 plt.tight_layout()
 plt.savefig("chart.png")
 
-# ✅ Save HTML report
+# ✅ Save HTML report with HR count INCLUDED
 with open("employee_report.html", "w") as f:
     f.write(f"""
     <html>
