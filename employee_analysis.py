@@ -1,39 +1,45 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# Sample dataset
+# Sample employee dataset
 data = {
-    "EmployeeID": range(1, 21),
-    "Department": ["HR", "IT", "Finance", "Sales", "Marketing"] * 4,
-    "PerformanceScore": [85, 78, 92, 88, 76, 90, 81, 87, 95, 83,
-                         77, 89, 91, 84, 80, 86, 93, 82, 79, 88],
-    "Region": ["North", "South", "East", "West"] * 5
+    "EmployeeID": range(1, 101),
+    "Department": [
+        "HR" if i % 5 == 0 else
+        "Finance" if i % 5 == 1 else
+        "Engineering" if i % 5 == 2 else
+        "Sales" if i % 5 == 3 else
+        "Marketing"
+        for i in range(1, 101)
+    ],
+    "Region": ["North", "South", "East", "West"] * 25
 }
 
 df = pd.DataFrame(data)
 
-# ✅ Frequency count for HR department
+# ✅ Calculate frequency count for HR
 hr_count = (df["Department"] == "HR").sum()
 print("Frequency count for HR department:", hr_count)
 
-# ✅ Create histogram
-plt.figure(figsize=(6, 4))
-df["Department"].value_counts().plot(kind="bar", color="skyblue", edgecolor="black")
+# ✅ Plot histogram of departments
+plt.figure(figsize=(6,4))
+df["Department"].value_counts().plot(kind="bar")
 plt.title("Department Distribution")
 plt.xlabel("Department")
-plt.ylabel("Number of Employees")
+plt.ylabel("Count")
 plt.tight_layout()
+plt.savefig("chart.png")
 
-# Save chart as HTML
-html_file = "employee_report.html"
-with open(html_file, "w") as f:
-    f.write("<html><head><title>Employee Report</title></head><body>\n")
-    f.write("<h2>Employee Department Distribution</h2>\n")
-    f.write(f"<p>Email: 23f1000504@ds.study.iitm.ac.in</p>\n")
-    f.write(f"<p>Frequency count for HR department: {hr_count}</p>\n")
-    # Save PNG and embed
-    plt.savefig("chart.png")
-    f.write('<img src="chart.png" width="600">\n')
-    f.write("</body></html>")
-
-print(f"Report saved as {html_file}")
+# ✅ Save HTML report
+with open("employee_report.html", "w") as f:
+    f.write(f"""
+    <html>
+    <head><title>Employee Performance Analysis</title></head>
+    <body>
+        <h2>Employee Performance Analysis</h2>
+        <p>Email: 23f1000504@ds.study.iitm.ac.in</p>
+        <p><b>Frequency count for HR department: {hr_count}</b></p>
+        <img src="chart.png" alt="Histogram" width="500">
+    </body>
+    </html>
+    """)
